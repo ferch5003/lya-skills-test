@@ -8,8 +8,12 @@ import { User, UserDocument } from 'src/users/schemas/user.schema';
 export class UserExistGuard implements CanActivate {
   constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
-  canActivate(context: ExecutionContext): boolean | Promise<boolean> | Observable<boolean> {
+  canActivate(
+    context: ExecutionContext
+  ): boolean | Promise<boolean> | Observable<boolean> {
     const user = context.switchToHttp().getRequest().body;
-    return !!(this.userModel.findOne({ username: user.username }));
+    return this.userModel
+      .exists({ username: user.username })
+      .then((res) => !res);
   }
 }

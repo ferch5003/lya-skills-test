@@ -21,9 +21,9 @@ export class UsersService {
     return `This action returns a #${id} user`;
   }
 
-  update(id: string, updateUserDto: UpdateUserDto) {
+  update(id: number, updateUserDto: UpdateUserDto) {
     return this.userModel.updateOne(
-      { _id: id },
+      { seqID: id },
       { $set: { ...updateUserDto } }
     );
   }
