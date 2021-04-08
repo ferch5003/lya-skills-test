@@ -3,6 +3,7 @@ import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserExistGuard } from 'src/guards/user-exist.guard';
+import { ActivateUserDto } from './dto/activate-user.dto';
 
 @Controller('users')
 export class UsersController {
@@ -22,6 +23,11 @@ export class UsersController {
   @Put(':id')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.usersService.update(+id, updateUserDto);
+  }
+
+  @Patch(':id/active')
+  activate(@Param('id') id: string) {
+    return this.usersService.activate(+id);
   }
 
   @Delete(':id')

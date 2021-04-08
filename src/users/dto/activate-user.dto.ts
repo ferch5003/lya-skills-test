@@ -1,4 +1,5 @@
 import { OmitType, PartialType } from '@nestjs/mapped-types';
+import { IsBoolean, IsDefined } from 'class-validator';
 import { CreateUserDto } from './create-user.dto';
 
 export class ActivateUserDto extends PartialType(
@@ -9,4 +10,8 @@ export class ActivateUserDto extends PartialType(
     'lastname',
     'age',
   ] as const)
-) {}
+) {
+  @IsDefined()
+  @IsBoolean()
+  active: boolean;
+}
