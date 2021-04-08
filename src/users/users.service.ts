@@ -18,6 +18,10 @@ export class UsersService {
     return this.userModel.findOne({ seqID: id });
   }
 
+  async findByUsername(username: string): Promise<User> {
+    return this.userModel.findOne({ username: username });
+  }
+
   async update(id: number, updateUserDto: UpdateUserDto) {
     return this.userModel.updateOne(
       { seqID: id },
