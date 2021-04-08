@@ -31,12 +31,14 @@ export class AuthController {
         loginUserDto.username,
         loginUserDto.password
       );
-      if (validatedUser) {
-        return validatedUser;
-      }
-      return response
-        .status(HttpStatus.UNAUTHORIZED)
-        .json({ error: 'Invalid credentials, try again' });
+      return validatedUser.then((res) => {
+        if (res) {
+          return res;
+        }
+        response
+          .status(HttpStatus.UNAUTHORIZED)
+          .json({ error: 'Invalid credentials, try again' });
+      });
     } catch (error) {
       return response
         .status(HttpStatus.INTERNAL_SERVER_ERROR)

@@ -17,10 +17,14 @@ export class TokenBlacklistExistGuard implements CanActivate {
   canActivate(
     context: ExecutionContext
   ): boolean | Promise<boolean> | Observable<boolean> {
-    const token = context
+    const authorization = context
       .switchToHttp()
       .getRequest()
-      .headers['authorization'].replace('Bearer ', '');
-    return this.tokenBlacklistModel.exists({ token }).then((res) => !res);
+      .headers['authorization'];
+    if (authorization) {
+      const token = authorization.replace('Bearer ', '');
+      return this.tokenBlacklistModel.exists({ token }).then((res) => !res);
+    }
+    return false;
   }
 }
