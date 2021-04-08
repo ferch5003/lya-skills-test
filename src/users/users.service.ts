@@ -10,30 +10,26 @@ import { User, UserDocument } from './schemas/user.schema';
 export class UsersService {
   constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
-  create(createUserDto: CreateUserDto) {
+  async create(createUserDto: CreateUserDto): Promise<User> {
     return new this.userModel(createUserDto).save();
   }
 
-  findAll() {
-    return `This action returns all users`;
-  }
-
-  findOne(id: number) {
+  async findOne(id: number): Promise<User> {
     return this.userModel.findOne({ seqID: id });
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
+  async update(id: number, updateUserDto: UpdateUserDto) {
     return this.userModel.updateOne(
       { seqID: id },
       { $set: { ...updateUserDto } }
     );
   }
 
-  activate(id: number) {
+  async activate(id: number) {
     return this.userModel.updateOne({ seqID: id }, { $set: { active: true } });
   }
 
-  remove(id: number) {
+  async remove(id: number) {
     return this.userModel.deleteOne({ seqID: id });
   }
 }
