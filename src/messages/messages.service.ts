@@ -9,10 +9,6 @@ export class MessagesService {
   constructor(private httpService: HttpService) {}
 
   getCatFact(): Observable<AxiosResponse<CatFactEntity>> {
-    return this.httpService.get('fact').pipe(
-      map((axiosResponse: AxiosResponse) => {
-        return axiosResponse.data;
-      })
-    );
+    return this.httpService.get('fact');
   }
 }

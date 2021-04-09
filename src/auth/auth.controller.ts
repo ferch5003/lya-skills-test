@@ -13,6 +13,7 @@ import { LoginUserDto } from './dto/login-user.dto';
 import { Response } from 'express';
 import { TokenBlacklistService } from 'src/token-blacklist/token-blacklist.service';
 import { TokenBlacklistExistGuard } from 'src/guards/token-blacklist-exist.guard';
+import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
 
 @Controller('authorization')
 export class AuthController {
@@ -46,7 +47,7 @@ export class AuthController {
     }
   }
 
-  @UseGuards(TokenBlacklistExistGuard)
+  @UseGuards(JwtAuthGuard, TokenBlacklistExistGuard)
   @Delete()
   remove(
     @Headers('authorization') authorization,

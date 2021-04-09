@@ -18,6 +18,7 @@ import { UserExistGuard } from 'src/guards/user-exist.guard';
 import { UserActiveGuard } from 'src/guards/user-active.guard';
 import { TokenBlacklistExistGuard } from 'src/guards/token-blacklist-exist.guard';
 import { Response } from 'express';
+import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
 
 @Controller('users')
 export class UsersController {
@@ -30,11 +31,11 @@ export class UsersController {
     @Res({ passthrough: true }) response: Response
   ) {
     return this.usersService.create(createUserDto).then((res) => {
-      return response.status(HttpStatus.OK).json({ id: res.seqID });
+      response.status(HttpStatus.OK).json({ id: res.seqID });
     });
   }
 
-  @UseGuards(UserActiveGuard, TokenBlacklistExistGuard)
+  @UseGuards(UserActiveGuard, JwtAuthGuard, TokenBlacklistExistGuard)
   @Get(':id')
   findOne(
     @Param('id') id: string,
@@ -48,7 +49,7 @@ export class UsersController {
     });
   }
 
-  @UseGuards(TokenBlacklistExistGuard)
+  @UseGuards(JwtAuthGuard, TokenBlacklistExistGuard)
   @Put(':id')
   update(
     @Param('id') id: string,
@@ -62,7 +63,7 @@ export class UsersController {
     });
   }
 
-  @UseGuards(TokenBlacklistExistGuard)
+  @UseGuards(JwtAuthGuard, TokenBlacklistExistGuard)
   @Patch(':id/active')
   activate(
     @Param('id') id: string,
@@ -75,7 +76,7 @@ export class UsersController {
     });
   }
 
-  @UseGuards(TokenBlacklistExistGuard)
+  @UseGuards(JwtAuthGuard, TokenBlacklistExistGuard)
   @Delete(':id')
   remove(
     @Param('id') id: string,

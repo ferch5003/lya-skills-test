@@ -6,7 +6,6 @@ import { AuthModule } from './auth/auth.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
 import { TokenBlacklistModule } from './token-blacklist/token-blacklist.module';
-import { ClientsModule, Transport } from '@nestjs/microservices';
 import { MessagesService } from './messages/messages.service';
 import { MessagesModule } from './messages/messages.module';
 
@@ -20,20 +19,9 @@ import { MessagesModule } from './messages/messages.module';
       envFilePath: ['.env', '.env.development', '.env.production'],
     }),
     TokenBlacklistModule,
-    ClientsModule.register([
-      {
-        name: 'MESSAGE_SERVICE',
-        transport: Transport.MQTT,
-        options: {
-          url: `${process.env.MQTT_URL}`,
-          username: `${process.env.MQTT_USERNAME}`,
-          password: `${process.env.MQTT_PASSWORD}`,
-        }
-      },
-    ]),
     MessagesModule,
   ],
   controllers: [AppController],
-  providers: [AppService, MessagesService],
+  providers: [AppService],
 })
 export class AppModule {}

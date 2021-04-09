@@ -22,7 +22,6 @@ export class AuthService {
         username: user.username,
         firstname: user.firstname,
         lastname: user.lastname,
-        age: user.age,
         token: this.jwtService.sign(payload),
       };
       return authetincatedser;
