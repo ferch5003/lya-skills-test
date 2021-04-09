@@ -12,7 +12,7 @@ async function bootstrap() {
     },
   });
 
-  await app.startAllMicroservicesAsync();
+  // await app.startAllMicroservicesAsync();
   await app.listen(3000);
 }
 bootstrap();
